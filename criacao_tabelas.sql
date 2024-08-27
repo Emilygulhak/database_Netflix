@@ -1,66 +1,61 @@
--- criação do banco de dados
 CREATE DATABASE netflix;
 
-
--- usar o banco de dados que quero trabalhar
-use netflix;
-
-
--- criação das tabelas 
+USE netflix;
 
 CREATE TABLE planos (
-id INT PRIMARY KEY auto_increment,
-tipo VARCHAR(200),
-valor FLOAT,
-descricao VARCHAR(200)
-);
-
-CREATE TABLE catalogo_staff (
-id INT PRIMARY KEY AUTO_INCREMENT,
-id_catalogo INT,
-nome VARCHAR(200),
-funcao VARCHAR(200)
+id_plano INT PRIMARY KEY AUTO_INCREMENT, 
+tipo varchar(200),
+valor float,
+descricao varchar(200)
 );
 
 CREATE TABLE catalogo (
-id INT PRIMARY KEY auto_increment,
-titulo VARCHAR(200),
-genero VARCHAR(200),
-lancamento date,
-tipo VARCHAR(50),
-duracao VARCHAR(10)
+id_catalogo INT PRIMARY KEY AUTO_INCREMENT, 
+titulo varchar(200),
+genero varchar(200),
+lancamento DATE,
+tipo varchar(50),
+duracao int
 );
 
--- como realizei a criação de uma tabela, que possuia um relacionamento adicionei com o alter table o relacionamento FK.
-ALTER TABLE catalogo_staff ADD CONSTRAINT FOREIGN KEY(id_catalogo) REFERENCES catalogo (id);
+CREATE TABLE catalogo_staff (
+id_staff INT PRIMARY KEY AUTO_INCREMENT, 
+id_catalogo_staff INT,
+nome varchar(200),
+funcao varchar(50),
+FOREIGN KEY (id_catalogo_staff) REFERENCES catalogo(id_catalogo)
+);
+
+ 
 
 CREATE TABLE usuarios (
-id INT PRIMARY KEY auto_increment,
-nome VARCHAR(200),
+id_usuario INT PRIMARY KEY AUTO_INCREMENT, 
+nome varchar(200),
 nascimento date,
-email VARCHAR(200),
-senha VARCHAR(20),
+email varchar(200),
+senha varchar(20),
 data_cadastro date
 );
 
 CREATE TABLE assistidos (
-id INT PRIMARY KEY auto_increment,
-id_usuario INT,
-id_catalogo INT,
+id INT PRIMARY KEY AUTO_INCREMENT, 
+id_usuario_assistidos int,
+id_catalogo_assistidos int,
 hora_inicio datetime,
 hora_fim datetime,
-FOREIGN KEY (id_usuario) REFERENCES usuarios (id),
-FOREIGN KEY (id_catalogo) REFERENCES catalogo (id)
+FOREIGN KEY (id_usuario_assistidos) REFERENCES usuarios(id_usuario),
+FOREIGN KEY (id_catalogo_assistidos) REFERENCES catalogo(id_catalogo)
 );
 
 CREATE TABLE assinaturas (
-id INT PRIMARY KEY auto_increment,
-id_usuario INT,
-id_plano INT,
+id INT PRIMARY KEY AUTO_INCREMENT, 
+id_usuario_assinaturas int,
+id_plano_assinaturas int,
 data_inicio date,
-FOREIGN KEY (id_usuario) REFERENCES usuarios (id),
-FOREIGN KEY (id_plano) REFERENCES planos (id)
+FOREIGN KEY (id_usuario_assinaturas) REFERENCES usuarios(id_usuario),
+FOREIGN KEY (id_plano_assinaturas) REFERENCES planos(id_plano)
 );
+
 
 
 
